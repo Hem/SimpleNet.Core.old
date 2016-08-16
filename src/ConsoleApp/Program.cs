@@ -1,32 +1,33 @@
-﻿using ConsoleApp.Dto;
-using SimpleNet.Core.Data.Mappers;
-using SimpleNet.Core.Data.SqlServer;
-using System.Data;
-using System.Data.Common;
+﻿using ConsoleApp.Repository;
+using System;
 
 namespace ConsoleApp
 {
     public class Program
     {
         public const string CONNECTION_STRING = @"Server=.\SQLEXPRESS;Database=AdventureWorks2012;Trusted_Connection=True;";
-
-
-        static IRowMapper<Person> PERSON_MAPPER = MapBuilder<Person>.BuildAllProperties();
+        
 
         public static void Main(string[] args)
         {
-            const string SQL = @" SELECT * FROM Person.Person WHERE LastName = @LastName ";
 
-            var db = new SqlServerProvider(CONNECTION_STRING);
 
-            var dal = new SimpleNet.Core.Data.Repository.SimpleDataAccessLayer(db);
+            var repository = new PersonRepository();
 
-            var parameters = new DbParameter[]
+            var recordsTask = repository.Find("Miller");
+
+            recordsTask.Wait();
+
+
+            foreach(var person in recordsTask.Result)
             {
-                db.GetParameter("@LastName", "Miller")
-            };
+                Console.WriteLine($" ({person.BusinessEntityId}) {person.FirstName}, {person.LastName}");
+            }
 
-            var records = dal.ReadAsync<Person>(PERSON_MAPPER, SQL, CommandType.Text, parameters).Result;
+
+            Console.WriteLine("PRINT COMPLETE:");
+            Console.ReadLine();
+
             
 
         }
