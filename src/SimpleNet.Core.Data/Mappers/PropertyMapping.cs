@@ -26,7 +26,7 @@ namespace SimpleNet.Core.Data.Mappers
         // TResult type parameter.
         private static readonly NewExpression CreationExpression = Expression.New(typeof(TResult));
 
-        private readonly Func<DbDataRecord, TResult> mapping;
+        private readonly Func<DbDataReader, TResult> mapping;
 
         /// <summary>
         /// Creates a new instance of <see cref="ReflectionRowMapper{TResult}"/>.
@@ -38,7 +38,7 @@ namespace SimpleNet.Core.Data.Mappers
 
             try
             {
-                var parameter = Expression.Parameter(typeof(DbDataRecord), "reader");
+                var parameter = Expression.Parameter(typeof(DbDataReader), "reader");
                 var bindings =
                     propertyMappings.Select(kvp => (MemberBinding)
                         Expression.Bind(
@@ -46,8 +46,8 @@ namespace SimpleNet.Core.Data.Mappers
                             Expression.Convert(
                                 Expression.Call(Expression.Constant(kvp.Value), ConvertValue, new Expression[] { parameter }),
                                 kvp.Key.PropertyType)));
-                Expression<Func<DbDataRecord, TResult>> expr =
-                    Expression.Lambda<Func<DbDataRecord, TResult>>(
+                Expression<Func<DbDataReader, TResult>> expr =
+                    Expression.Lambda<Func<DbDataReader, TResult>>(
                         Expression.MemberInit(
                             CreationExpression,
                             bindings),
@@ -69,7 +69,7 @@ namespace SimpleNet.Core.Data.Mappers
         /// <summary>Given a record from a data reader, map the contents to a common language runtime object.</summary>
         /// <param name="row">The input data from the database.</param>
         /// <returns>The mapped object.</returns>
-        public TResult MapRow(DbDataRecord row)
+        public TResult MapRow(DbDataReader row)
         {
             return this.mapping(row);
         }
@@ -100,14 +100,14 @@ namespace SimpleNet.Core.Data.Mappers
         /// </summary>
         /// <param name="row">The data record.</param>
         /// <returns>The properly converted value.</returns>
-        public abstract object GetPropertyValue(DbDataRecord row);
+        public abstract object GetPropertyValue(DbDataReader row);
 
         /// <summary>
         /// Performs the actual mapping from column to property.
         /// </summary>
         /// <param name="instance">The object that contains the <see cref="PropertyMapping.Property"/>.</param>
         /// <param name="row">The row that contains the <see cref="ColumnNameMapping.ColumnName"/>.</param>
-        public void Map(object instance, DbDataRecord row)
+        public void Map(object instance, DbDataReader row)
         {
             object convertedValue = GetPropertyValue(row);
 
@@ -214,7 +214,7 @@ namespace SimpleNet.Core.Data.Mappers
         /// </summary>
         /// <param name="row">The data record.</param>
         /// <returns>The value for the corresponding column converted to the type of the mapped property.</returns>
-        public override object GetPropertyValue(DbDataRecord row)
+        public override object GetPropertyValue(DbDataReader row)
         {
             if (row == null) throw new ArgumentNullException(nameof(row));
 
@@ -273,7 +273,7 @@ namespace SimpleNet.Core.Data.Mappers
         /// </summary>
         /// <param name="func">The func that will be used to map the property.</param>
         /// <param name="property">The property that will be used to map to.</param>
-        public FuncMapping(PropertyInfo property, Func<DbDataRecord, object> func)
+        public FuncMapping(PropertyInfo property, Func<DbDataReader, object> func)
             : base(property)
         {
             if (func == null) throw new ArgumentNullException(nameof(func));
@@ -284,14 +284,14 @@ namespace SimpleNet.Core.Data.Mappers
         /// <summary>
         /// Gets the function that will be used to map the properties value.
         /// </summary>
-        public Func<DbDataRecord, object> Func { get; private set; }
+        public Func<DbDataReader, object> Func { get; private set; }
 
         /// <summary>
         /// Gets the value for the mapped property from the <paramref name="row"/>.
         /// </summary>
         /// <param name="row">The data record.</param>
         /// <returns>The value for the corresponding column converted to the type of the mapped property.</returns>
-        public override object GetPropertyValue(DbDataRecord row)
+        public override object GetPropertyValue(DbDataReader row)
         {
             return Func(row);
         }

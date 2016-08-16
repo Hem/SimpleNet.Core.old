@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace SimpleNet.Core.Data.Contracts
 {
-    interface ISimpleDatabaseProvider
+    public interface ISimpleDatabaseProvider
     {
         /// <summary>
         /// Returns a new database connection.

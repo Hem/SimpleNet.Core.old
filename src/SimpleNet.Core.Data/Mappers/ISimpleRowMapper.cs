@@ -8,7 +8,7 @@ namespace SimpleNet.Core.Data.Mappers
     /// <typeparam name="T"></typeparam>
     public interface IRowMapper<out T>
     {
-        T MapRow(DbDataRecord record);
+        T MapRow(DbDataReader record);
     }
 
 }

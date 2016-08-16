@@ -182,7 +182,7 @@ namespace SimpleNet.Core.Data.Mappers
                     return builderContext;
                 }
 
-                public IMapBuilderContext<TResult> WithFunc(Func<DbDataRecord, TMember> f)
+                public IMapBuilderContext<TResult> WithFunc(Func<DbDataReader, TMember> f)
                 {
                     if (f == null) throw new ArgumentNullException(nameof(f));
                     
@@ -276,7 +276,7 @@ namespace SimpleNet.Core.Data.Mappers
         /// </summary>
         /// <param name="f">The user specified function that will map the current property.</param>
         /// <returns>The fluent interface that can be used further specify mappings.</returns>
-        IMapBuilderContext<TResult> WithFunc(Func<DbDataRecord, TMember> f);
+        IMapBuilderContext<TResult> WithFunc(Func<DbDataReader, TMember> f);
     }
 
 
