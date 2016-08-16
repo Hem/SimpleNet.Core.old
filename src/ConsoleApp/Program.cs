@@ -5,13 +5,8 @@ namespace ConsoleApp
 {
     public class Program
     {
-        public const string CONNECTION_STRING = @"Server=.\SQLEXPRESS;Database=AdventureWorks2012;Trusted_Connection=True;";
-        
-
         public static void Main(string[] args)
-        {
-
-
+        {   
             var repository = new PersonRepository();
 
             var recordsTask = repository.Find("Miller");
@@ -27,9 +22,7 @@ namespace ConsoleApp
 
             Console.WriteLine("PRINT COMPLETE:");
             Console.ReadLine();
-
             
-
         }
 
 
