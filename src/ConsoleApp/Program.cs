@@ -15,7 +15,7 @@ namespace ConsoleApp
 
         public static void Main(string[] args)
         {
-            const string SQL = @"SELECT * FROM Person.Person WHERE LastName = @LastName ";
+            const string SQL = @" SELECT * FROM Person.Person WHERE LastName = @LastName ";
 
             var db = new SqlServerProvider(CONNECTION_STRING);
 

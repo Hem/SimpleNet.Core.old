@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.Common;
 
-namespace SimpleNet.Core.Data.Contracts
+namespace SimpleNet.Core.Data
 {
     public interface ISimpleDatabaseProvider
     {

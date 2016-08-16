@@ -1,5 +1,4 @@
-﻿using SimpleNet.Core.Data.Contracts;
-using System.Data;
+﻿using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
@@ -7,16 +6,16 @@ namespace SimpleNet.Core.Data.SqlServer
 {
     public class SqlServerProvider : ISimpleDatabaseProvider
     {
-        readonly string ConnectionString;
+        readonly string _connectionString;
 
         public SqlServerProvider(string connectionString)
         {
-            ConnectionString = connectionString;
+            _connectionString = connectionString;
         }
 
         public DbConnection GetConnection()
         {
-            var conn = new SqlConnection(ConnectionString);
+            var conn = new SqlConnection(_connectionString);
             conn.Open();
             return conn;
         }

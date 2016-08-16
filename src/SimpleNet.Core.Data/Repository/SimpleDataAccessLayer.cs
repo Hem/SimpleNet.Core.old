@@ -1,5 +1,4 @@
-﻿using SimpleNet.Core.Data.Contracts;
-using SimpleNet.Core.Data.Mappers;
+﻿using SimpleNet.Core.Data.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace SimpleNet.Core.Data.Repository
 {
-    public class SimpleDataAccessLayer
+    public class SimpleDataAccessLayer : ISimpleDataAccessLayer
     {
-        internal readonly ISimpleDatabaseProvider Db;
+        public ISimpleDatabaseProvider DatabaseProvider { get; }
         
-        public SimpleDataAccessLayer(ISimpleDatabaseProvider db)
+        public SimpleDataAccessLayer(ISimpleDatabaseProvider databaseProvider)
         {
-            Db = db;
+            DatabaseProvider = databaseProvider;
         }
 
 
@@ -27,7 +26,7 @@ namespace SimpleNet.Core.Data.Repository
                                                         CommandType commandType,
                                                         DbParameter[] parameters  )
         {
-            using (var connection = Db.GetConnection())
+            using (var connection = DatabaseProvider.GetConnection())
             {
                 return await ReadAsync(connection, mapper, commandText, commandType, parameters);
             }
@@ -42,7 +41,7 @@ namespace SimpleNet.Core.Data.Repository
         {
             var records = new List<T>();
 
-            using (var command = Db.GetCommand())
+            using (var command = DatabaseProvider.GetCommand())
             {
                 command.Connection = connection;
                 command.CommandText = commandText;
@@ -86,7 +85,7 @@ namespace SimpleNet.Core.Data.Repository
         /// <returns>The count of number of records affected.</returns>
         public async Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, DbParameter[] parameters)
         {
-            using (var connection = Db.GetConnection())
+            using (var connection = DatabaseProvider.GetConnection())
             {
                 return await ExecuteNonQueryAsync(connection, commandText, commandType, parameters);
             }
@@ -109,7 +108,7 @@ namespace SimpleNet.Core.Data.Repository
 
             try
             {
-                using (var command = Db.GetCommand())
+                using (var command = DatabaseProvider.GetCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = commandText;
@@ -170,7 +169,7 @@ namespace SimpleNet.Core.Data.Repository
         /// <returns>The first value returned</returns>
         public async Task<object> ExecuteScalarAsync(string commandText, CommandType commandType, DbParameter[] parameters)
         {
-            using (var connection = Db.GetConnection())
+            using (var connection = DatabaseProvider.GetConnection())
             {
                 return await ExecuteScalarAsync(connection, commandText, commandType, parameters);
             }
@@ -191,7 +190,7 @@ namespace SimpleNet.Core.Data.Repository
 
             try
             {
-                using (var command = Db.GetCommand())
+                using (var command = DatabaseProvider.GetCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = commandText;
