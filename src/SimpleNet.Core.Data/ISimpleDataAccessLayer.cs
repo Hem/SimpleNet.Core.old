@@ -8,7 +8,10 @@ namespace SimpleNet.Core.Data
 {
     public interface ISimpleDataAccessLayer
     {
-
+        /// <summary>
+        /// Database Provider... 
+        /// This can be used to get DbParameter instances...
+        /// </summary>
         ISimpleDatabaseProvider DatabaseProvider { get; }
 
 
