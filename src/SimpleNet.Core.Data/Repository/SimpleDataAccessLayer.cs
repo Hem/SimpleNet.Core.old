@@ -19,7 +19,7 @@ namespace SimpleNet.Core.Data.Repository
         }
 
 
-
+        #region ReadAsync
 
 
         public async Task<IList<T>> ReadAsync<T>(       IRowMapper<T> mapper, 
@@ -32,12 +32,7 @@ namespace SimpleNet.Core.Data.Repository
                 return await ReadAsync(connection, mapper, commandText, commandType, parameters);
             }
         }
-
-
-
-
-
-
+        
         public async Task<IList<T>> ReadAsync<T>(   DbConnection connection, 
                                                     IRowMapper<T> mapper, 
                                                     string commandText, 
@@ -74,6 +69,173 @@ namespace SimpleNet.Core.Data.Repository
             return records;
         }
 
+
+        #endregion
+
+
+        #region ExecuteNonQueryAsync
+
+
+        /// <summary>
+        /// Use this to execute a command against the database when a response is NOT needed 
+        /// or we only need the count of number of records affected
+        /// </summary>
+        /// <param name="commandText">The sql or procedure name to execute</param>
+        /// <param name="commandType">The command type</param>
+        /// <param name="parameters">An array || a list of parameters to pass to the command</param>
+        /// <returns>The count of number of records affected.</returns>
+        public async Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, DbParameter[] parameters)
+        {
+            using (var connection = Db.GetConnection())
+            {
+                return await ExecuteNonQueryAsync(connection, commandText, commandType, parameters);
+            }
+        }
+
+
+        /// <summary>
+        /// Use this to execute a command against the database when a response is NOT needed 
+        /// or we only need the count of number of records affected
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="commandText">The sql or procedure name to execute</param>
+        /// <param name="commandType">The command type</param>
+        /// <param name="parameters">An array || a list of parameters to pass to the command</param>
+        /// <param name="transaction"></param>
+        /// <returns>The count of number of records affected.</returns>
+        public async Task<int> ExecuteNonQueryAsync(DbConnection connection, string commandText, CommandType commandType, DbParameter[] parameters, DbTransaction transaction = null)
+        {
+            int value;
+
+            try
+            {
+                using (var command = Db.GetCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = commandText;
+                    command.CommandType = commandType;
+
+
+                    if (transaction != null) command.Transaction = transaction;
+
+                    // Add parameters
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters.ToArray());
+                    }
+
+                    value = await command.ExecuteNonQueryAsync();
+
+                    command.Parameters.Clear();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("CommandText", commandText);
+                ex.Data.Add("CommandType", commandType.ToString());
+
+                if (parameters != null)
+                {
+                    if (commandType == CommandType.StoredProcedure)
+                    {
+                        // ex.Data.Add("SqlCommand", parameters.FormatToExecuteProcedure(commandText));
+                        ex.Data.Add("SqlCommand", commandText);
+                    }
+
+                    foreach (var parameter in parameters)
+                    {
+                        ex.Data.Add(parameter.ParameterName, parameter.Value);
+                    }
+                }
+
+                // ex.TraceException();
+                throw;
+            }
+
+            return value;
+        }
+
+        #endregion
+
+
+        #region ExecuteScalarAsync
+
+        /// <summary>
+        /// Executes a command against the dataset and returns the first value received.
+        /// </summary>
+        /// <param name="commandText">The sql or procedure name to execute</param>
+        /// <param name="commandType">The command type</param>
+        /// <param name="parameters">An array || a list of parameters to pass to the command</param>
+        /// <returns>The first value returned</returns>
+        public async Task<object> ExecuteScalarAsync(string commandText, CommandType commandType, DbParameter[] parameters)
+        {
+            using (var connection = Db.GetConnection())
+            {
+                return await ExecuteScalarAsync(connection, commandText, commandType, parameters);
+            }
+        }
+
+        /// <summary>
+        /// Executes a command against the dataset and returns the first value received.
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="commandText">The sql or procedure name to execute</param>
+        /// <param name="commandType">The command type</param>
+        /// <param name="parameters">An array || a list of parameters to pass to the command</param>
+        /// <param name="transaction"></param>
+        /// <returns>The first value returned</returns>
+        public async Task<object> ExecuteScalarAsync(DbConnection connection, string commandText, CommandType commandType, DbParameter[] parameters, DbTransaction transaction = null)
+        {
+            object value;
+
+            try
+            {
+                using (var command = Db.GetCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = commandText;
+                    command.CommandType = commandType;
+
+                    if (transaction != null) command.Transaction = transaction;
+
+                    // Add parameters
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters.ToArray());
+                    }
+
+                    value = await command.ExecuteScalarAsync();
+
+                    command.Parameters.Clear();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("CommandText", commandText);
+                ex.Data.Add("CommandType", commandType.ToString());
+
+                if (parameters != null)
+                {
+                    if (commandType == CommandType.StoredProcedure)
+                        ex.Data.Add("SqlCommand", commandText);
+                    // ex.Data.Add("SqlCommand", parameters.FormatToExecuteProcedure(commandText));
+
+                    foreach (var parameter in parameters)
+                    {
+                        ex.Data.Add(parameter.ParameterName, parameter.Value);
+                    }
+                }
+
+                //ex.TraceException();
+                throw;
+            }
+
+            return value;
+        }
+
+        #endregion
 
     }
 }
