@@ -1,9 +1,9 @@
-﻿using System.Data;
+﻿using SimpleNet.Core.Data.Contracts;
+using System.Data;
 using System.Data.Common;
-using SimpleNet.Core.Data.Contracts;
 using System.Data.SqlClient;
 
-namespace ConsoleApp.SqlServer
+namespace SimpleNet.Core.Data.SqlServer
 {
     public class SqlServerProvider : ISimpleDatabaseProvider
     {
@@ -37,4 +37,5 @@ namespace ConsoleApp.SqlServer
             return new SqlParameter(name, value) { Direction = direction };
         }
     }
+
 }

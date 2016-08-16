@@ -1,11 +1,8 @@
 ﻿using ConsoleApp.Dto;
-using ConsoleApp.SqlServer;
 using SimpleNet.Core.Data.Mappers;
-using System;
-using System.Collections.Generic;
+using SimpleNet.Core.Data.SqlServer;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data.Common;
 
 namespace ConsoleApp
 {
@@ -24,14 +21,13 @@ namespace ConsoleApp
 
             var dal = new SimpleNet.Core.Data.Repository.SimpleDataAccessLayer(db);
 
-            var parameters = new[]
+            var parameters = new DbParameter[]
             {
                 db.GetParameter("@LastName", "Miller")
             };
 
             var records = dal.ReadAsync<Person>(PERSON_MAPPER, SQL, CommandType.Text, parameters).Result;
-
-
+            
 
         }
     }
