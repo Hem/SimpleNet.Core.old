@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>b613e5ba-583e-4e1b-b637-c51ef08bc515</ProjectGuid>
-    <RootNamespace>SimpleNet.Core.Data</RootNamespace>
+    <ProjectGuid>1b624273-8cdb-4640-854f-922721b5870d</ProjectGuid>
+    <RootNamespace>ConsoleApp</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
