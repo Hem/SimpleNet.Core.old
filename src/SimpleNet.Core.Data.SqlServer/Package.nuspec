@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    
+    <id>SimpleNet.Core.Data.SqlServer</id>
+    <version>0.0.2</version>
+    
+    <authors>Hem Talreja</authors>
+    <owners>Hem Talreja</owners>
+    
+    <projectUrl>https://github.com/Hem/SimpleNet.Core</projectUrl>
+    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
+    <description>
+      SqlServer adapter for SimpleNet.Core.Data
+    </description>
+    
+    <releaseNotes>0.0.1 Initital port from SimpleNet.Data </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    
+    <tags>ADO.NET Database SqlServer</tags>
+    
+    <dependencies>
+      <dependency id="System.Data.Common" version="4.1.0" />
+      <dependency id="System.Data.SqlClient" version="4.1.0" />
+      <dependency id="SimpleNet.Core.Data" version="0.0.1" />
+    </dependencies>
+  
+  </metadata>
+  
+  <files>
+    <file src="bin\release\netstandard1.6\SimpleNet.Core.Data.SqlServer.*" target="lib\netstandard1.6" />
+  </files>
+</package>
