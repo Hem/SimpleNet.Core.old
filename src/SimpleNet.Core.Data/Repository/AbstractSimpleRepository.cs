@@ -9,7 +9,7 @@ namespace SimpleNet.Core.Data.Repository
 {
     public abstract class AbstractSimpleRepository
     {
-        public abstract ISimpleDataAccessLayer Database { get; }
+        public abstract ISimpleDataAccessLayer Database { get; set; }
 
         
 

@@ -1,11 +1,11 @@
 {
   "title": "SimpleNet.Core.Data.SqlServer",
   "description": "Sql Server Adapter for SimpleNet.Core.Data",
-  "version": "0.0.2-*",
+  "version": "0.0.3-*",
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "SimpleNet.Core.Data": "0.0.1-*",
+    "SimpleNet.Core.Data": "0.0.3-*",
     "System.Data.Common": "4.1.0",
     "System.Data.SqlClient": "4.1.0"
   },

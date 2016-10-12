@@ -3,7 +3,7 @@
   <metadata>
     
     <id>SimpleNet.Core.Data</id>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     
     <authors>Hem Talreja</authors>
     <owners>Hem Talreja</owners>
@@ -21,7 +21,10 @@
       .NET Core database access using ADO.NET
     </summary>
     
-    <releaseNotes>0.0.1 Initital port from SimpleNet.Data </releaseNotes>
+    <releaseNotes>
+		0.0.1 Initital port from SimpleNet.Data 
+		0.0.3 Updated Abstract Repository
+	</releaseNotes>
     <copyright>Copyright 2016</copyright>
     
     <tags>ADO.NET Database SQL</tags>
