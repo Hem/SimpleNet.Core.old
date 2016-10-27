@@ -1,42 +1,45 @@
 <?xml version="1.0"?>
-<package >
+<package>
+
   <metadata>
-    
+
     <id>SimpleNet.Core.Data</id>
     <version>0.0.3</version>
-    
+
     <authors>Hem Talreja</authors>
     <owners>Hem Talreja</owners>
-    
+
     <projectUrl>https://github.com/Hem/SimpleNet.Core</projectUrl>
-    
+
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    
+
     <description>
       SimpleNet.Core.Data and SimpleNet.Core.Data.SqlServer are ADO.NET abstraction on .NET core platform.
       We use EntLib's Data Accesor like capabilities to return an array of objects instead of DataTable or DataRow
     </description>
-    
+
     <summary>
       .NET Core database access using ADO.NET
     </summary>
-    
+
     <releaseNotes>
-		0.0.1 Initital port from SimpleNet.Data 
-		0.0.3 Updated Abstract Repository
-	</releaseNotes>
+      0.0.1 Initital port from SimpleNet.Data
+      0.0.3 Added Non-Async Capabilities, Updated signature for Abstract Repository
+    </releaseNotes>
+
     <copyright>Copyright 2016</copyright>
-    
+
     <tags>ADO.NET Database SQL</tags>
-    
+
     <dependencies>
       <dependency id="System.ComponentModel.TypeConverter" version="4.1.0" />
       <dependency id="System.Data.Common" version="4.1.0" />
     </dependencies>
-  
+
   </metadata>
-  
+
   <files>
     <file src="bin\release\netstandard1.6\SimpleNet.Core.Data.*" target="lib\netstandard1.6" />
   </files>
+
 </package>
