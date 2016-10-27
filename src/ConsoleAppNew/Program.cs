@@ -1,16 +1,17 @@
-﻿using ConsoleApp.Repository;
+﻿using ConsoleAppNew.Repository;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ConsoleApp
+namespace ConsoleAppNew
 {
-    /// <summary>
-    /// Sample application to show how to execute SQL statements using SimpleNet.Core.Data library.
-    /// We are using adventure works database as issue by Microsoft.
-    /// </summary>
     public class Program
     {
         public static void Main(string[] args)
-        {   
+        {
+            Console.WriteLine("In Here");
+            Console.ReadKey();
             
             var repository = new PersonRepository();
 
@@ -19,18 +20,16 @@ namespace ConsoleApp
             recordsTask.Wait();
 
 
-            foreach(var person in recordsTask.Result)
+            foreach (var person in recordsTask.Result)
             {
                 Console.WriteLine($" ({person.BusinessEntityId}) {person.FirstName}, {person.LastName}");
             }
 
 
             Console.WriteLine("PRINT COMPLETE:");
-            Console.ReadLine();
-            
+
+
+
         }
-
-
-
     }
 }

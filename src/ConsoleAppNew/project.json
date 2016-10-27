@@ -9,10 +9,8 @@
       "type": "platform",
       "version": "1.0.0"
     },
-    "SimpleNet.Core.Data": "0.0.2-*",
-    "SimpleNet.Core.Data.SqlServer": "0.0.2-*",
-    "System.Data.Common": "4.1.0",
-    "System.Data.SqlClient": "4.1.0"
+    "SimpleNet.Core.Data": "0.0.3-*",
+    "SimpleNet.Core.Data.SqlServer": "0.0.3-*"
   },
 
   "frameworks": {

@@ -2,7 +2,7 @@
 using SimpleNet.Core.Data.Repository;
 using SimpleNet.Core.Data.SqlServer;
 
-namespace ConsoleApp.Repository
+namespace ConsoleAppNew.Repository
 {
     public class BaseRepository : AbstractSimpleRepository
     {
