@@ -11,7 +11,7 @@ namespace SimpleNet.Core.Data.Repository
     {
         public abstract ISimpleDataAccessLayer Database { get; set; }
 
-        
+
 
         protected DbParameter GetParameter(string name, object value)
         {
@@ -24,13 +24,51 @@ namespace SimpleNet.Core.Data.Repository
 
 
 
-        protected async Task<IList<T>> ReadAsync<T>(IRowMapper<T> mapper, string commandText, 
+        protected IList<T> Read<T>(IRowMapper<T> mapper, string commandText,
+                                                CommandType commandType, DbParameter[] parameters)
+        {
+            return Database.Read(mapper, commandText, commandType, parameters);
+        }
+
+        protected IList<T> Read<T>(DbConnection connection, IRowMapper<T> mapper, string commandText,
+                                                CommandType commandType, DbParameter[] parameters, DbTransaction transaction = null)
+        {
+            return Database.Read(connection, mapper, commandText, commandType, parameters, transaction);
+        }
+
+        protected int ExecuteNonQuery(string commandText, CommandType commandType, DbParameter[] parameters)
+        {
+            return Database.ExecuteNonQuery(commandText, commandType, parameters);
+        }
+
+        protected int ExecuteNonQuery(DbConnection connection, string commandText, CommandType commandType,
+                                                        DbParameter[] parameters, DbTransaction transaction = null)
+        {
+            return Database.ExecuteNonQuery(connection, commandText, commandType, parameters, transaction);
+        }
+
+        protected object ExecuteScalar(string commandText, CommandType commandType, DbParameter[] parameters)
+        {
+            return Database.ExecuteScalar(commandText, commandType, parameters);
+        }
+
+        protected object ExecuteScalar(DbConnection connection, string commandText, CommandType commandType,
+                                                        DbParameter[] parameters, DbTransaction transaction = null)
+        {
+            return Database.ExecuteScalar(connection, commandText, commandType, parameters, transaction);
+        }
+
+
+        // -- Async stuff here!!!
+
+
+        protected async Task<IList<T>> ReadAsync<T>(IRowMapper<T> mapper, string commandText,
                                                 CommandType commandType, DbParameter[] parameters)
         {
             return await Database.ReadAsync(mapper, commandText, commandType, parameters);
         }
 
-        protected async Task<IList<T>> ReadAsync<T>(DbConnection connection, IRowMapper<T> mapper, string commandText, 
+        protected async Task<IList<T>> ReadAsync<T>(DbConnection connection, IRowMapper<T> mapper, string commandText,
                                                 CommandType commandType, DbParameter[] parameters, DbTransaction transaction = null)
         {
             return await Database.ReadAsync(connection, mapper, commandText, commandType, parameters, transaction);
@@ -41,8 +79,8 @@ namespace SimpleNet.Core.Data.Repository
             return await Database.ExecuteNonQueryAsync(commandText, commandType, parameters);
         }
 
-        protected async Task<int> ExecuteNonQueryAsync(    DbConnection connection, string commandText, CommandType commandType, 
-                                                        DbParameter[] parameters, DbTransaction transaction = null )
+        protected async Task<int> ExecuteNonQueryAsync(DbConnection connection, string commandText, CommandType commandType,
+                                                        DbParameter[] parameters, DbTransaction transaction = null)
         {
             return await Database.ExecuteNonQueryAsync(connection, commandText, commandType, parameters, transaction);
         }
@@ -52,10 +90,12 @@ namespace SimpleNet.Core.Data.Repository
             return await Database.ExecuteScalarAsync(commandText, commandType, parameters);
         }
 
-        protected async Task<object> ExecuteScalarAsync(   DbConnection connection, string commandText, CommandType commandType, 
+        protected async Task<object> ExecuteScalarAsync(DbConnection connection, string commandText, CommandType commandType,
                                                         DbParameter[] parameters, DbTransaction transaction = null)
         {
             return await Database.ExecuteScalarAsync(connection, commandText, commandType, parameters, transaction);
         }
+
+
     }
 }

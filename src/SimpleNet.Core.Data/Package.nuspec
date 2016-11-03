@@ -4,7 +4,7 @@
   <metadata>
 
     <id>SimpleNet.Core.Data</id>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 
     <authors>Hem Talreja</authors>
     <owners>Hem Talreja</owners>
@@ -25,6 +25,7 @@
     <releaseNotes>
       0.0.1 Initital port from SimpleNet.Data
       0.0.3 Added Non-Async Capabilities, Updated signature for Abstract Repository
+      0.0.4 Added Non-Async call wrappers in the AbstractRepository
     </releaseNotes>
 
     <copyright>Copyright 2016</copyright>
